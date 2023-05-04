@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App'
 import './index.css'
 import {
   createBrowserRouter,
@@ -13,6 +12,9 @@ import Inventory from './components/Inventory/Inventory';
 import Login from './components/Login/Login';
 import cartProductsLoader from './loaders/cartProductsLoader';
 import Checkout from './components/Checkout/Checkout';
+import SignUp from './components/SignUp/SignUp';
+import AuthProvider from './components/Provider/AuthProvider';
+import PrivateRout from './route/PrivateRout';
 
 const router = createBrowserRouter([
   {
@@ -21,7 +23,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Shop></Shop>
+        element: <Shop></Shop>,
       },
       {
         path: 'orders',
@@ -30,15 +32,19 @@ const router = createBrowserRouter([
       },
       {
         path: 'inventory',
-        element: <Inventory></Inventory>
+        element: <Inventory></Inventory>,
       },
       {
         path:'checkout',
-        element: <Checkout></Checkout>
+        element: <PrivateRout><Checkout></Checkout></PrivateRout>,
       },
       {
         path: 'login',
-        element: <Login></Login>
+        element: <Login></Login>,
+      },
+      {
+        path:'signUp',
+        element: <SignUp></SignUp>,
       }
     ]
   }
@@ -46,6 +52,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </React.StrictMode>,
 )
